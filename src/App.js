@@ -1,25 +1,61 @@
-import logo from './logo.svg';
-import './App.css';
+import { lazy, Suspense } from 'react';
+import { Routes, Route } from 'react-router-dom';
+import style from './App.module.css';
+import { ToastContainer } from 'react-toastify';
+import Loader from 'react-loader-spinner';
+import Container from './components/Container/Container';
+import PageHeader from './components/Header/PageHeader';
 
-function App() {
+// import HomePage from './pages/HomePage/HomePage';
+// import MoviesPage from './pages/MoviesPage/MoviesPage';
+// import MovieDetailPage from './pages/MovieDetailsPage/MovieDetailsPage';
+
+const HomePage = lazy(() => import('./pages/HomePage/HomePage.js'));
+const MoviesPage = lazy(() => import('./pages/MoviesPage/MoviesPage.js'));
+const MovieDetailPage = lazy(() =>
+   import('./pages/MovieDetailsPage/MovieDetailsPage/MovieDetailPage.js'),
+);
+
+export default function App() {
    return (
-      <div className="App">
-         <header className="App-header">
-            <img src={logo} className="App-logo" alt="logo" />
-            <p>
-               Edit <code>src/App.js</code> and save to reload.
-            </p>
-            <a
-               className="App-link"
-               href="https://reactjs.org"
-               target="_blank"
-               rel="noopener noreferrer"
+      <div className={style.App}>
+         <Container>
+            <PageHeader />
+
+            <Suspense
+               fallback={
+                  <div className={style.loadWrapper}>
+                     <Loader
+                        type="Triangle"
+                        color="red"
+                        secondaryColor="blue"
+                        height={80}
+                        width={80}
+                     />
+                  </div>
+               }
             >
-               Learn React
-            </a>
-         </header>
+               <Routes>
+                  <Route path="/" exact element={<HomePage />} />
+
+                  <Route path="/movies" exact component={<MoviesPage />} />
+
+                  {/* <Route path="/movies/:movieId/*" component={<MovieDetailPage />} /> */}
+               </Routes>
+            </Suspense>
+         </Container>
+
+         <ToastContainer
+            position="top-left"
+            autoClose={4000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+         />
       </div>
    );
 }
-
-export default App;

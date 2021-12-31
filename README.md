@@ -1,6 +1,6 @@
 # goit-react-hw-05-movies
 
-# Критерии приема
+## Критерии приема
 
 -  Создан репозиторий `goit-react-hw-05-movies`
 -  При сдаче домашней работы есть ссылки: на исходные файлы и рабочие страницы каждого проекта на
@@ -14,7 +14,7 @@
 -  JS-код чистый и понятный, используется `Prettier`
 -  Стилизация выполнена `CSS-модулями` или `Styled Components`.
 
-## Задание «Кинопоиск»
+## Задание «Кинопоиск»:
 
 Создай базовую маршрутизацию для приложения поиска и хранения фильмов. Превью рабочего приложения
 [смотри по ссылке](https://drive.google.com/file/d/1vR0hi3n1236Q5Bg4-se-8JVKD9UKSfId/view?usp=sharing).
@@ -38,7 +38,7 @@
 
 [Ссылка на документацию](https://developers.themoviedb.org/3/getting-started/introduction)
 
-## Маршруты
+## Маршруты:
 
 В приложении должны быть следующие маршруты. Если пользователь зашел по несуществующему маршруту,
 его необходимо перенаправлять на домашнюю страницу.
@@ -210,10 +210,9 @@ import 'modern-normalize/modern-normalize.css';
 npm i -S gh-pages
 ```
 
-**package.json**
-
 ```json
 "homepage": "https://имя-профиля.github.io/имя-репозитория",
+"homepage": "https://DimaLitvinenko.github.io/goit-react-hw-05-muvies",
 "scripts": {
 +   "predeploy": "npm run build",
 +   "deploy": "gh-pages -d build",
@@ -221,7 +220,9 @@ npm i -S gh-pages
 },
 ```
 
-_"homepage": "https://DimaLitvinenko.github.io/goit-react-hw-02-phonebook",_
+```json
+
+```
 
 # Getting Started with Create React App
 
@@ -308,3 +309,26 @@ This section has moved here:
 
 This section has moved here:
 [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+<!-- // ====================================================== \\ -->
+
+Loader :
+
+<CradleLoader arialLabel="loading-indicator" /> <Triangle arialLabel="loading-indicator" />
+
+<!-- // ======================================================== \\ -->
+
+QuickLink :
+
+import { withQuicklink } from 'quicklink/dist/react/hoc.js';
+
+const options = { origins: [] };
+
+<Suspense fallback={<div>Loading...</div>}> <Route path="/" exact component={withQuicklink(Home,
+options)} /> <Route path="/blog" exact component={withQuicklink(Blog, options)} /> <Route
+path="/blog/:title" component={withQuicklink(Article, options)} /> <Route path="/about" exact
+component={withQuicklink(About, options)} /> </Suspense>
+
+ICONS : import { GrReactjs, GiFilmProjecto } from 'react-icons/gr'; GrReactjs,GiFilmProjector
+
+SiReact; SiReactrouter ;

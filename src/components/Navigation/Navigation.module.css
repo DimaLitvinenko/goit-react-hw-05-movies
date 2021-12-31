@@ -1,0 +1,39 @@
+/* .navigation {
+} */
+.list {
+   display: flex;
+   justify-content: baseline;
+   align-items: center;
+}
+/* .item {
+
+} */
+.item:not(:last-child) {
+   margin-right: 10px;
+}
+
+.link {
+   display: inline-block;
+   text-decoration: none;
+   padding: 12px;
+   font-weight: 500;
+   color: #0d253f;
+   font-size: 20px;
+   text-transform: capitalize;
+   transition: color 300ms linear;
+}
+.link:hover,
+.link:focus {
+   color: #2196f3;
+}
+
+.activeLink {
+   color: #2196f3;
+}
+
+.lastItem {
+   max-width: 100px;
+   margin-left: auto;
+   font-size: 15px;
+   font-weight: normal;
+}
