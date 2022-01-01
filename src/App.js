@@ -7,13 +7,9 @@ import Loader from 'react-loader-spinner';
 import Container from './components/Container/Container';
 import PageHeader from './components/Header/PageHeader';
 
-// import HomePage from './pages/HomePage/HomePage';
-// import MoviesPage from './pages/MoviesPage/MoviesPage';
-// import MovieDetailPage from './pages/MovieDetailsPage/MovieDetailsPage';
-
 const HomePage = lazy(() => import('./pages/HomePage/HomePage'));
 const MoviesPage = lazy(() => import('./pages/MoviesPage/MoviesPage'));
-const MovieDetailsPage = lazy(() => import('./pages/MovieDetailsPage/MovieDetailsPage'));
+const MovieDetailPage = lazy(() => import('./pages/MovieDetailsPage/MovieDetailsPage'));
 
 export default function App() {
    return (
@@ -34,10 +30,8 @@ export default function App() {
             >
                <Routes>
                   <Route path="/" element={<HomePage />} />
-
                   <Route path="/movies" element={<MoviesPage />} />
-
-                  <Route path="/movies/:slug/*" element={<MovieDetailsPage />} />
+                  <Route path="/movies/:slug/*" element={<MovieDetailPage />} />
                </Routes>
             </Suspense>
          </Container>

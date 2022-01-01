@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 // import { Link, useParams } from 'react-router-dom';
 import style from './Cast.module.css';
 import { toast } from 'react-toastify';
@@ -24,7 +24,7 @@ export default function Cast({ movieId }) {
             setCast(data.cast);
             setStatus('resolved');
          } else {
-            return Promise.reject(new Error(`Movie ${movieId} - not detected!`));
+            return Promise.reject(new Error(`The movie ${movieId} - not detected!`));
          }
       } catch {
          setError(error);
@@ -38,6 +38,9 @@ export default function Cast({ movieId }) {
          {status === 'pending' && (
             <Loader type="Triangle" color="red" secondaryColor="blue" height={80} width={80} />
          )}
+
+         {status === 'rejected' && <h3>{error.message}</h3>}
+
          {status === 'resolved' && (
             <ul className={style.list}>
                {cast.map(({ id, profile_path, name, character }) => (
