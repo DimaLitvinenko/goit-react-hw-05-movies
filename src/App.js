@@ -1,7 +1,8 @@
-import { lazy, Suspense } from 'react';
+import React, { lazy, Suspense } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import style from './App.module.css';
 import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Loader from 'react-loader-spinner';
 import Container from './components/Container/Container';
 import PageHeader from './components/Header/PageHeader';
@@ -10,11 +11,9 @@ import PageHeader from './components/Header/PageHeader';
 // import MoviesPage from './pages/MoviesPage/MoviesPage';
 // import MovieDetailPage from './pages/MovieDetailsPage/MovieDetailsPage';
 
-const HomePage = lazy(() => import('./pages/HomePage/HomePage.js'));
-const MoviesPage = lazy(() => import('./pages/MoviesPage/MoviesPage.js'));
-const MovieDetailPage = lazy(() =>
-   import('./pages/MovieDetailsPage/MovieDetailsPage/MovieDetailPage.js'),
-);
+const HomePage = lazy(() => import('./pages/HomePage/HomePage'));
+const MoviesPage = lazy(() => import('./pages/MoviesPage/MoviesPage'));
+const MovieDetailsPage = lazy(() => import('./pages/MovieDetailsPage/MovieDetailsPage'));
 
 export default function App() {
    return (
@@ -24,23 +23,21 @@ export default function App() {
 
             <Suspense
                fallback={
-                  <div className={style.loadWrapper}>
-                     <Loader
-                        type="Triangle"
-                        color="red"
-                        secondaryColor="blue"
-                        height={80}
-                        width={80}
-                     />
-                  </div>
+                  <Loader
+                     type="Triangle"
+                     color="red"
+                     secondaryColor="blue"
+                     height={80}
+                     width={80}
+                  />
                }
             >
                <Routes>
-                  <Route path="/" exact element={<HomePage />} />
+                  <Route path="/" element={<HomePage />} />
 
-                  <Route path="/movies" exact component={<MoviesPage />} />
+                  <Route path="/movies" element={<MoviesPage />} />
 
-                  {/* <Route path="/movies/:movieId/*" component={<MovieDetailPage />} /> */}
+                  <Route path="/movies/:slug/*" element={<MovieDetailsPage />} />
                </Routes>
             </Suspense>
          </Container>
