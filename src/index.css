@@ -1,6 +1,24 @@
 body {
    line-height: 1.5;
    background-color: #fff;
+   /* background: -webkit-linear-gradient(
+      135deg,
+      rgb(13, 37, 63) 6%,
+      rgb(86, 181, 184) 47%,
+      rgb(144, 206, 161) 86%
+   );
+   background: -moz-linear-gradient(
+      135deg,
+      rgb(13, 37, 63) 6%,
+      rgb(86, 181, 184) 47%,
+      rgb(144, 206, 161) 86%
+   );
+   background: linear-gradient(
+      135deg,
+      rgb(13, 37, 63) 6%,
+      rgb(86, 181, 184) 47%,
+      rgb(144, 206, 161) 86%
+   ); */
    color: #212121;
    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
       'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;

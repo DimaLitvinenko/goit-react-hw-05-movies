@@ -11,29 +11,17 @@ export function fetchTrending() {
       api_key: API_KEY,
    });
 
-   return fetch(`${BASE_URL}/trending/${MediaType.MOVIE}/${TimeWindow}${searchParams}`);
+   return fetch(`${BASE_URL}/trending/${MediaType.MOVIE}/${TimeWindow.DAY}?${searchParams}`);
 }
 
-export function fetchMovieQuery(searchQuery) {
-   const searchParams = new URLSearchParams({
-      api_key: API_KEY,
-      query: searchQuery,
-   });
-
-   return fetch(`${BASE_URL}/search/${MediaType.MOVIE}?${searchParams}`);
-}
-fetchMovieQuery.propTypes = {
-   searchQuery: PropTypes.string.isRequired,
-};
-
-export function fetchMovieDetails(movieId) {
+export function fetchDetails(movieId) {
    const searchParams = new URLSearchParams({
       api_key: API_KEY,
    });
 
    return fetch(`${BASE_URL}/${MediaType.MOVIE}/${movieId}?${searchParams}`);
 }
-fetchMovieDetails.propTypes = {
+fetchDetails.PropTypes = {
    movieId: PropTypes.number.isRequired,
 };
 
@@ -44,7 +32,7 @@ export function fetchCast(movieId) {
 
    return fetch(`${BASE_URL}/${MediaType.MOVIE}/${movieId}/credits?${searchParams}`);
 }
-fetchCast.propTypes = {
+fetchCast.PropTypes = {
    movieId: PropTypes.number.isRequired,
 };
 
@@ -55,6 +43,18 @@ export function fetchReviews(movieId) {
 
    return fetch(`${BASE_URL}/${MediaType.MOVIE}/${movieId}/reviews?${searchParams}`);
 }
-fetchReviews.propTypes = {
+fetchReviews.PropTypes = {
    movieId: PropTypes.number.isRequired,
+};
+
+export function fetchMovieByQuery(searchQuery) {
+   const searchParams = new URLSearchParams({
+      api_key: API_KEY,
+      query: searchQuery,
+   });
+
+   return fetch(`${BASE_URL}/search/${MediaType.MOVIE}?${searchParams}`);
+}
+fetchMovieByQuery.PropTypes = {
+   searchQuery: PropTypes.string.isRequired,
 };
