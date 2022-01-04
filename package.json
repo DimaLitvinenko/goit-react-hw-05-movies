@@ -2,12 +2,11 @@
   "name": "goit-react-hw-05-movies",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://DimaLitvinenko.github.io/goit-react-hw-05-movies",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
-    "gh-pages": "^3.2.3",
+    "eslint-plugin-react-hooks": "^4.2.1-rc.0-next-3dc41d8a2-20211223",
     "modern-normalize": "^1.1.0",
     "netlify": "^10.1.0",
     "prop-types": "^15.8.0",
@@ -22,13 +21,13 @@
     "web-vitals": "^2.1.2"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "netlify deploy -p",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "deploy": "gh-pages -d build",
     "eject": "react-scripts eject",
-    "prepare": "husky install",
-    "predeploy": "npm run build"
+    "prepare": "husky install"
   },
   "eslintConfig": {
     "extends": [
@@ -58,6 +57,6 @@
   },
   "lint-staged": {
     "*.js": "eslint --cache --fix",
-    "*.{js,css,scss,md}": "prettier --write"
+    "*.{js,css,md}": "prettier --write"
   }
 }

@@ -6,6 +6,15 @@ const API_KEY = 'a521a2d303bae2d05d7a95a32fcece9a';
 const MediaType = { ALL: 'all', MOVIE: 'movie', TV: 'tv', PERSON: 'person' };
 const TimeWindow = { DAY: 'day', WEEK: 'week' };
 
+// async function fetchWithErrorHandling(
+//    url = '',
+//    config = {},
+//    api_key = 'a521a2d303bae2d05d7a95a32fcece9a',
+// ) {
+//    const response = await fetch(url, config, api_key);
+//    return response.ok ? await response.json() : Promise.reject(new Error('Not found'));
+// }
+
 export function fetchTrending() {
    const searchParams = new URLSearchParams({
       api_key: API_KEY,

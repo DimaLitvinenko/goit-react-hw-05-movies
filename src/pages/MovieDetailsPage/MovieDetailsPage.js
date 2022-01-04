@@ -1,11 +1,12 @@
-import React, { useState, useEffect, lazy, Suspense } from 'react';
+import { useState, useEffect, useRef, lazy, Suspense } from 'react';
 import { Routes, Route, Link, useNavigate, useParams, useLocation } from 'react-router-dom';
 import style from './MovieDetailsPage.module.css';
 import { toast } from 'react-toastify';
 import Loader from 'react-loader-spinner';
-import { TiInfoLargeOutline } from 'react-icons/ti';
+import { TiInfoLargeOutline, TiArrowBackOutline } from 'react-icons/ti';
 import { BsCast } from 'react-icons/bs';
 import { MdPreview } from 'react-icons/md';
+
 import * as api from '../../services/themovieDB-api';
 
 const Cast = lazy(() => import('../Cast/Cast'));
@@ -19,8 +20,13 @@ export default function MovieDetailPage() {
    const [movie, setMovie] = useState([]);
    const [error, setError] = useState(null);
    const [status, setStatus] = useState('idle');
+   const unmountedRef = useRef();
 
    useEffect(() => {
+      if (!unmountedRef.current) {
+         setStatus('pending');
+         getMovieDetail();
+      }
       async function getMovieDetail() {
          try {
             const response = await api.fetchDetails(movieId);
@@ -37,17 +43,17 @@ export default function MovieDetailPage() {
             toast.error(error.message);
          }
       }
-      setStatus('pending');
-      getMovieDetail();
+
+      return () => {
+         unmountedRef.current = true;
+      };
    }, [movieId]);
 
    const { poster_path, tagline, title, release_date, vote_average, overview, genres } = movie;
 
    return (
       <>
-         {status === 'pending' && (
-            <Loader type="Triangle" color="red" secondaryColor="blue" height={80} width={80} />
-         )}
+         {status === 'pending' && <Loader type="ThreeDots" color="blue" height={80} width={80} />}
 
          {status === 'rejected' && <h2>{error.message}</h2>}
 
@@ -70,7 +76,7 @@ export default function MovieDetailPage() {
                      alt={tagline}
                   />
 
-                  <div className={style.description}>
+                  <div className={style.descWrapper}>
                      <h2>
                         {title} ({new Date(release_date).getFullYear()})
                      </h2>
@@ -80,9 +86,9 @@ export default function MovieDetailPage() {
                      <p>{overview}</p>
 
                      <h3>Genres</h3>
-                     <ul className={style.genres}>
+                     <ul className={style.genresList}>
                         {genres.map(({ id, name }) => (
-                           <li className={style.genre} key={id}>
+                           <li className={style.genreItem} key={id}>
                               {name}
                            </li>
                         ))}
@@ -95,12 +101,12 @@ export default function MovieDetailPage() {
                      Additional information <TiInfoLargeOutline />
                   </h2>
                   <ul className={style.infoList}>
-                     <li>
+                     <li className={style.infoItem}>
                         <Link to={`./cast`} state={{ from: location?.state?.from }}>
                            Cast <BsCast />
                         </Link>
                      </li>
-                     <li>
+                     <li className={style.infoItem}>
                         <Link to={`./reviews`} state={{ from: location?.state?.from }}>
                            Reviews <MdPreview />
                         </Link>
@@ -110,11 +116,7 @@ export default function MovieDetailPage() {
             </section>
          )}
 
-         <Suspense
-            fallback={
-               <Loader type="Triangle" color="red" secondaryColor="blue" height={80} width={80} />
-            }
-         >
+         <Suspense fallback={<Loader type="ThreeDots" color="blue" height={80} width={80} />}>
             <Routes>
                <Route path="cast" element={<Cast movieId={movieId} />} />
                <Route path="reviews" element={<Reviews movieId={movieId} />} />

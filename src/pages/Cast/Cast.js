@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-// import { Link, useParams } from 'react-router-dom';
+import React, { useState, useEffect, useRef } from 'react';
 import style from './Cast.module.css';
 import { toast } from 'react-toastify';
 import * as api from '../../services/themovieDB-api';
@@ -10,37 +9,39 @@ export default function Cast({ movieId }) {
    const [cast, setCast] = useState([]);
    const [error, setError] = useState(null);
    const [status, setStatus] = useState('idle');
+   const unmountedRef = useRef();
 
    useEffect(() => {
-      setStatus('pending');
-      getMovieCast();
-   }, []);
-
-   async function getMovieCast() {
-      try {
-         const response = await api.fetchCast(movieId);
-         if (response.ok) {
-            const data = await response.json();
-            setCast(data.cast);
-            setStatus('resolved');
-         } else {
-            return Promise.reject(new Error(`The movie ${movieId} - not detected!`));
-         }
-      } catch {
-         setError(error);
-         setStatus('rejected');
-         toast.error(error.message);
+      if (!unmountedRef.current) {
+         setStatus('pending');
+         getMovieCast();
       }
-   }
+      async function getMovieCast() {
+         try {
+            const response = await api.fetchCast(movieId);
+            if (response.ok && !unmountedRef.current) {
+               const data = await response.json();
+               setCast(data.cast);
+               setStatus('resolved');
+            } else {
+               return Promise.reject(new Error(`The movie ${movieId} - not detected!`));
+            }
+         } catch (error) {
+            setError(error);
+            setStatus('rejected');
+            toast.error(error.message);
+         }
+      }
+      return () => {
+         unmountedRef.current = !unmountedRef.current;
+      };
+   }, [movieId]);
 
    return (
       <section>
-         {status === 'pending' && (
-            <Loader type="Triangle" color="red" secondaryColor="blue" height={80} width={80} />
-         )}
+         {status === 'pending' && <Loader type="ThreeDots" color="blue" height={80} width={80} />}
 
-         {status === 'rejected' && <h3>{error.message}</h3>}
-
+         {status === 'rejected' && <h2>{error.message}</h2>}
          {status === 'resolved' && (
             <ul className={style.list}>
                {cast.map(({ id, profile_path, name, character }) => (
@@ -60,6 +61,7 @@ export default function Cast({ movieId }) {
                ))}
             </ul>
          )}
+         {cast.length === 0 && <h3>We don't have acrtors for this movie!</h3>}
       </section>
    );
 }

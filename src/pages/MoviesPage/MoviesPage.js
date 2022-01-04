@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link, useLocation, useSearchParams } from 'react-router-dom';
 import style from './MoviesPage.module.css';
 import convertToSlug from '../../utils/slugify';
 import * as api from '../../services/themovieDB-api';
 import { toast } from 'react-toastify';
 import Loader from 'react-loader-spinner';
-import { TiArrowBackOutline } from 'react-icons/ti';
 import { FcSearch } from 'react-icons/fc';
 
 export default function MoviesPage() {
@@ -16,8 +15,14 @@ export default function MoviesPage() {
    const [movies, setMovies] = useState(null);
    const [error, setError] = useState('null');
    const [status, setStatus] = useState('idle');
+   const unmountedRef = useRef();
 
    useEffect(() => {
+      if ((searchQuery && !unmountedRef.current) || (searchQuery && unmountedRef.current)) {
+         setStatus('pending');
+         getMovieByQuery();
+      }
+
       async function getMovieByQuery() {
          try {
             const response = await api.fetchMovieByQuery(searchQuery);
@@ -26,7 +31,7 @@ export default function MoviesPage() {
                setMovies(data.results);
                setStatus('resolved');
             } else {
-               return Promise.reject(new Error(`Movie ${searchQuery} - not detected!`));
+               return Promise.reject(new Error(`The movie ${searchQuery} - not detected!`));
             }
          } catch (error) {
             setError(error);
@@ -34,10 +39,10 @@ export default function MoviesPage() {
             toast.error(error.message);
          }
       }
-      if (searchQuery) {
-         setStatus('pending');
-         getMovieByQuery();
-      }
+
+      return () => {
+         unmountedRef.current = !unmountedRef.current;
+      };
    }, [searchQuery]);
 
    function handleFormSubmit(event) {
@@ -47,7 +52,7 @@ export default function MoviesPage() {
          setSearchParams({ query });
          setQuery('');
       } else {
-         toast.error('The Entry field must be filled in!');
+         toast.error('The entry field must be filled in!');
       }
    }
 
@@ -77,19 +82,17 @@ export default function MoviesPage() {
             </button>
          </form>
 
-         {status === 'pending' && (
-            <Loader type="Triangle" color="red" secondaryColor="blue" height={80} width={80} />
-         )}
-         {status === 'rejected' && <h3>{error.message}</h3>}
+         {status === 'pending' && <Loader type="ThreeDots" color="blue" height={80} width={80} />}
+         {status === 'rejected' && <h2>{error.message}</h2>}
 
          {status === 'resolved' && (
             <ul className={style.list}>
                {movies.map(({ id, title }) => (
-                  <li key={id}>
+                  <li key={id} className={style.item}>
                      <Link
                         to={`/movies/${convertToSlug(`${title} ${id}`)}`}
                         state={{
-                           from: { location, label: `${(<TiArrowBackOutline />)} Back to Movies` },
+                           from: { location, label: 'go back to movies' },
                         }}
                      >
                         {title}

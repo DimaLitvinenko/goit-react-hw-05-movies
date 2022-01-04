@@ -1,15 +1,15 @@
 import React, { lazy, Suspense } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import style from './App.module.css';
-import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
 import Loader from 'react-loader-spinner';
 import Container from './components/Container/Container';
 import PageHeader from './components/Header/PageHeader';
 
-const HomePage = lazy(() => import('./pages/HomePage/HomePage'));
-const MoviesPage = lazy(() => import('./pages/MoviesPage/MoviesPage'));
-const MovieDetailPage = lazy(() => import('./pages/MovieDetailsPage/MovieDetailsPage'));
+const HomePage = lazy(() => import('./pages/HomePage/HomePage.js'));
+const MoviesPage = lazy(() => import('./pages/MoviesPage/MoviesPage.js'));
+const MovieDetailPage = lazy(() => import('./pages/MovieDetailsPage/MovieDetailsPage.js'));
 
 export default function App() {
    return (
@@ -17,17 +17,7 @@ export default function App() {
          <Container>
             <PageHeader />
 
-            <Suspense
-               fallback={
-                  <Loader
-                     type="Triangle"
-                     color="red"
-                     secondaryColor="blue"
-                     height={80}
-                     width={80}
-                  />
-               }
-            >
+            <Suspense fallback={<Loader type="ThreeDots" color="blue" height={80} width={80} />}>
                <Routes>
                   <Route path="/" element={<HomePage />} />
                   <Route path="/movies" element={<MoviesPage />} />

@@ -1,26 +1,60 @@
-/* .section {
+.section {
+   text-align: left;
 }
 
 .button {
+   text-align: center;
+   text-transform: capitalize;
+   cursor: pointer;
 }
 
 .mainWrapper {
+   display: flex;
+   border-bottom: 1px solid blue;
 }
 
 .image {
+   display: block;
 }
 
-.description {
+.descWrapper {
+   margin-left: 20px;
+   text-align: left;
 }
 
-.genres {
+.genresList {
+   display: flex;
+   list-style: none;
+   padding-left: 0;
+   margin-top: 0;
+   margin-bottom: 0;
 }
 
-.genre {
+.genreItem:not(:last-child) {
+   margin-right: 10px;
 }
 
 .infoWrapper {
+   border-bottom: 1px solid blue;
+   margin-bottom: 10px;
 }
 
 .infoList {
-} */
+   margin-top: 0;
+   margin-bottom: 0;
+   padding-left: 0;
+   text-align: center;
+   list-style: none;
+}
+
+.infoLink {
+   font-weight: bold;
+   text-decoration: none;
+   text-align: center;
+   transition: color 300ms linear;
+}
+
+.infoLink:hover,
+.infoLink:focus {
+   color: #2196f3;
+}
