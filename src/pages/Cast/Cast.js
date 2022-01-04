@@ -29,7 +29,15 @@ export default function Cast({ movieId }) {
          } catch (error) {
             setError(error);
             setStatus('rejected');
-            toast.error(error.message);
+            toast.error(`${error.message}`, {
+               position: 'top-left',
+               autoClose: 4000,
+               hideProgressBar: false,
+               closeOnClick: true,
+               pauseOnHover: true,
+               draggable: true,
+               progress: undefined,
+            });
          }
       }
       return () => {
@@ -39,9 +47,12 @@ export default function Cast({ movieId }) {
 
    return (
       <section>
-         {status === 'pending' && <Loader type="ThreeDots" color="blue" height={80} width={80} />}
+         {status === 'pending' && (
+            <Loader type="ThreeDots" color="blue" height={80} width={80} />
+         )}
 
          {status === 'rejected' && <h2>{error.message}</h2>}
+
          {status === 'resolved' && (
             <ul className={style.list}>
                {cast.map(({ id, profile_path, name, character }) => (

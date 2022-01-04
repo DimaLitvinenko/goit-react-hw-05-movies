@@ -1,0 +1,17 @@
+.item {
+   background-color: #fff;
+   text-align: start;
+}
+
+.item:nth-child(2n-1) {
+   background-color: #0d253f;
+   text-align: end;
+}
+
+.autorNick {
+   font-weight: bold;
+}
+
+.autorComent {
+   text-align: left;
+}

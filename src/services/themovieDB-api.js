@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 
-// api.themoviedb.org/3/movie/550?api_key = a521a2d303bae2d05d7a95a32fcece9a;
 const BASE_URL = 'https://api.themoviedb.org/3';
 const API_KEY = 'a521a2d303bae2d05d7a95a32fcece9a';
 const MediaType = { ALL: 'all', MOVIE: 'movie', TV: 'tv', PERSON: 'person' };
@@ -20,7 +19,9 @@ export function fetchTrending() {
       api_key: API_KEY,
    });
 
-   return fetch(`${BASE_URL}/trending/${MediaType.MOVIE}/${TimeWindow.DAY}?${searchParams}`);
+   return fetch(
+      `${BASE_URL}/trending/${MediaType.MOVIE}/${TimeWindow.DAY}?${searchParams}`,
+   );
 }
 
 export function fetchDetails(movieId) {

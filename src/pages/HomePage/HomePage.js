@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import style from './HomePage.module.css';
 import { SiThemoviedatabase } from 'react-icons/si';
+
 import { toast } from 'react-toastify';
 import Loader from 'react-loader-spinner';
 import * as api from '../../services/themovieDB-api';
@@ -19,6 +20,7 @@ export default function HomePage() {
          setStatus('pending');
          getFilmsTrending();
       }
+
       async function getFilmsTrending() {
          try {
             const response = await api.fetchTrending();
@@ -32,10 +34,17 @@ export default function HomePage() {
          } catch (error) {
             setError(error);
             setStatus('rejected');
-            toast.error();
+            toast.error(`${error.message}`, {
+               position: 'top-left',
+               autoClose: 4000,
+               hideProgressBar: false,
+               closeOnClick: true,
+               pauseOnHover: true,
+               draggable: true,
+               progress: undefined,
+            });
          }
       }
-
       return () => {
          unmountedRef.current = true;
       };
@@ -47,7 +56,9 @@ export default function HomePage() {
             Trending today <SiThemoviedatabase />
          </h2>
 
-         {status === 'pending' && <Loader type="ThreeDots" color="blue" height={80} width={80} />}
+         {status === 'pending' && (
+            <Loader type="ThreeDots" color="blue" height={80} width={80} />
+         )}
 
          {status === 'rejected' && <h3>{error.message}</h3>}
 
@@ -56,8 +67,9 @@ export default function HomePage() {
                {trendFilms.map(({ id, title }) => (
                   <li key={id} className={style.item}>
                      <Link
+                        className={style.movieLink}
                         to={`/movies/${convertToSlug(`${title} ${id}`)}`}
-                        state={{ from: { location, label: 'go back to home' } }}
+                        state={{ from: { location, label: 'back to Home' } }}
                      >
                         {title}
                      </Link>

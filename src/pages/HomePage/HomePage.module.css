@@ -1,5 +1,7 @@
 .title {
    text-transform: capitalize;
+   text-align: center;
+   margin-bottom: 5px;
 }
 
 .list {
@@ -10,5 +12,22 @@
    text-align: left;
 }
 
-/* .item {
-} */
+.item:not(:last-child) {
+   margin-bottom: 5px;
+}
+
+.movieLink {
+   cursor: pointer;
+   padding: 5px 10px;
+   text-align: center;
+   text-decoration: none;
+   color: #01b4e4;
+   background: #fff;
+   transition: color 250ms linear, text-decoration 250ms linear;
+}
+
+.movieLink:hover,
+.movieLink:focus {
+   color: #90cea1;
+   text-decoration: underline;
+}

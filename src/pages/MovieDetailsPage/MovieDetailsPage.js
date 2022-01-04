@@ -1,16 +1,24 @@
 import { useState, useEffect, useRef, lazy, Suspense } from 'react';
-import { Routes, Route, Link, useNavigate, useParams, useLocation } from 'react-router-dom';
+import {
+   Routes,
+   Route,
+   Link,
+   useNavigate,
+   useParams,
+   useLocation,
+} from 'react-router-dom';
 import style from './MovieDetailsPage.module.css';
 import { toast } from 'react-toastify';
 import Loader from 'react-loader-spinner';
 import { TiInfoLargeOutline, TiArrowBackOutline } from 'react-icons/ti';
+import { AiTwotoneHome } from 'react-icons/ai';
 import { BsCast } from 'react-icons/bs';
 import { MdPreview } from 'react-icons/md';
 
 import * as api from '../../services/themovieDB-api';
 
-const Cast = lazy(() => import('../Cast/Cast'));
-const Reviews = lazy(() => import('../Reviews/Reviews'));
+const Cast = lazy(() => import('../Cast/Cast.js'));
+const Reviews = lazy(() => import('../Reviews/Reviews.js'));
 
 export default function MovieDetailPage() {
    const navigate = useNavigate();
@@ -40,7 +48,15 @@ export default function MovieDetailPage() {
          } catch (error) {
             setError(error);
             setStatus('rejected');
-            toast.error(error.message);
+            toast.error(`${error.message}`, {
+               position: 'top-left',
+               autoClose: 4000,
+               hideProgressBar: false,
+               closeOnClick: true,
+               pauseOnHover: true,
+               draggable: true,
+               progress: undefined,
+            });
          }
       }
 
@@ -49,11 +65,14 @@ export default function MovieDetailPage() {
       };
    }, [movieId]);
 
-   const { poster_path, tagline, title, release_date, vote_average, overview, genres } = movie;
+   const { poster_path, tagline, title, release_date, vote_average, overview, genres } =
+      movie;
 
    return (
       <>
-         {status === 'pending' && <Loader type="ThreeDots" color="blue" height={80} width={80} />}
+         {status === 'pending' && (
+            <Loader type="ThreeDots" color="blue" height={80} width={80} />
+         )}
 
          {status === 'rejected' && <h2>{error.message}</h2>}
 
@@ -66,7 +85,7 @@ export default function MovieDetailPage() {
                      navigate(location?.state?.from?.location ?? '/');
                   }}
                >
-                  {location?.state?.from?.label ?? 'go back'}
+                  {location?.state?.from?.label ?? <AiTwotoneHome />}
                </button>
 
                <div className={style.mainWrapper}>
@@ -97,17 +116,25 @@ export default function MovieDetailPage() {
                </div>
 
                <div className={style.infoWrapper}>
-                  <h2>
+                  <h2 className={style.infoTitle}>
                      Additional information <TiInfoLargeOutline />
                   </h2>
                   <ul className={style.infoList}>
                      <li className={style.infoItem}>
-                        <Link to={`./cast`} state={{ from: location?.state?.from }}>
+                        <Link
+                           to={`./cast`}
+                           className={style.infoLink}
+                           state={{ from: location?.state?.from }}
+                        >
                            Cast <BsCast />
                         </Link>
                      </li>
                      <li className={style.infoItem}>
-                        <Link to={`./reviews`} state={{ from: location?.state?.from }}>
+                        <Link
+                           to={`./reviews`}
+                           className={style.infoLink}
+                           state={{ from: location?.state?.from }}
+                        >
                            Reviews <MdPreview />
                         </Link>
                      </li>
@@ -116,7 +143,9 @@ export default function MovieDetailPage() {
             </section>
          )}
 
-         <Suspense fallback={<Loader type="ThreeDots" color="blue" height={80} width={80} />}>
+         <Suspense
+            fallback={<Loader type="ThreeDots" color="blue" height={80} width={80} />}
+         >
             <Routes>
                <Route path="cast" element={<Cast movieId={movieId} />} />
                <Route path="reviews" element={<Reviews movieId={movieId} />} />
