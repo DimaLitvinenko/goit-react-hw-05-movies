@@ -5,6 +5,8 @@
 
 .item:nth-child(2n-1) {
    background-color: #0d253f;
+   color: white;
+   padding: 10px 24px;
    text-align: end;
 }
 

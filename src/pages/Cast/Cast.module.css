@@ -1,3 +1,10 @@
+.title {
+   text-align: center;
+   margin-top: 0;
+   margin-bottom: 12px;
+   color: #181a17;
+}
+
 .list {
    display: grid;
    grid-template-columns: repeat(3, minmax(0, 1fr));

@@ -6,15 +6,19 @@
    margin-bottom: 20px;
    padding: 5px 10px;
    text-align: center;
+   background: linear-gradient(to right, hsl(150 100% 50%), hsl(190 100% 60%));
    text-transform: capitalize;
+   border-radius: 6px;
+   opacity: 0.85;
    cursor: pointer;
-   color: #01b4e4;
-   transition: color 300ms linear, font-weight 300ms linear;
+   color: rgba(21, 20, 20, 0.85);
+   transition: color 300ms linear, background 300ms linear, opacity 300ms linear;
 }
 .button:hover,
 .button:focus {
-   color: #90cea1;
-   font-weight: bold;
+   opacity: 1;
+   color: rgb(21, 20, 20);
+   background: linear-gradient(to left, hsl(150 100% 50%), hsl(190 100% 60%));
 }
 
 .mainWrapper {
@@ -45,14 +49,21 @@
 
 .infoWrapper {
    border-bottom: 1px solid blue;
-   margin-bottom: 10px;
+   margin-bottom: 20px;
 }
 
 .infoTitle {
+   display: flex;
+   flex-direction: row;
+   align-items: center;
+   justify-content: center;
    text-align: center;
 }
 
 .infoList {
+   display: flex;
+   align-items: center;
+   justify-content: center;
    margin-top: 0;
    margin-bottom: 0;
    padding-left: 0;
@@ -61,10 +72,15 @@
 }
 
 .infoItem:not(last-child) {
-   margin-bottom: 15px;
+   margin-right: 15px;
 }
 
 .infoLink {
+   display: flex;
+   flex-direction: row;
+   align-items: center;
+   padding: 6px 10px;
+
    font-weight: bold;
    text-decoration: none;
    text-align: center;

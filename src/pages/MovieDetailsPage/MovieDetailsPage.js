@@ -9,8 +9,8 @@ import {
 } from 'react-router-dom';
 import style from './MovieDetailsPage.module.css';
 import { toast } from 'react-toastify';
-import Loader from 'react-loader-spinner';
-import { TiInfoLargeOutline, TiArrowBackOutline } from 'react-icons/ti';
+import Spinner from '../../components/Loader/Loader';
+import { TiInfoLargeOutline } from 'react-icons/ti';
 import { AiTwotoneHome } from 'react-icons/ai';
 import { BsCast } from 'react-icons/bs';
 import { MdPreview } from 'react-icons/md';
@@ -48,7 +48,7 @@ export default function MovieDetailPage() {
          } catch (error) {
             setError(error);
             setStatus('rejected');
-            toast.error(`${error.message}`, {
+            toast.error(error.message, {
                position: 'top-left',
                autoClose: 4000,
                hideProgressBar: false,
@@ -70,9 +70,7 @@ export default function MovieDetailPage() {
 
    return (
       <>
-         {status === 'pending' && (
-            <Loader type="ThreeDots" color="blue" height={80} width={80} />
-         )}
+         {status === 'pending' && <Spinner />}
 
          {status === 'rejected' && <h2>{error.message}</h2>}
 
@@ -117,7 +115,7 @@ export default function MovieDetailPage() {
 
                <div className={style.infoWrapper}>
                   <h2 className={style.infoTitle}>
-                     Additional information <TiInfoLargeOutline />
+                     Additional <TiInfoLargeOutline /> information
                   </h2>
                   <ul className={style.infoList}>
                      <li className={style.infoItem}>
@@ -143,9 +141,7 @@ export default function MovieDetailPage() {
             </section>
          )}
 
-         <Suspense
-            fallback={<Loader type="ThreeDots" color="blue" height={80} width={80} />}
-         >
+         <Suspense fallback={<Spinner />}>
             <Routes>
                <Route path="cast" element={<Cast movieId={movieId} />} />
                <Route path="reviews" element={<Reviews movieId={movieId} />} />

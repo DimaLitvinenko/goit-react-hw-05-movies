@@ -1,0 +1,22 @@
+.link {
+   padding: 12px;
+   text-decoration: none;
+   cursor: pointer;
+   color: #0d253f;
+   transition: color 280ms linear;
+}
+.link:hover ~ .logo {
+   color: #2196f3;
+}
+
+.logo {
+   display: block;
+   width: 100%;
+   max-width: 80px;
+   height: auto;
+   fill: transparent;
+   transition: fill 280ms linear;
+}
+.logo:hover {
+   color: #2196f3;
+}
