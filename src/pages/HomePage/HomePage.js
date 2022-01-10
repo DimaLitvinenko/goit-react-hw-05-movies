@@ -4,7 +4,7 @@ import style from './HomePage.module.css';
 import { SiThemoviedatabase } from 'react-icons/si';
 
 import { toast } from 'react-toastify';
-import Loader from 'react-loader-spinner';
+import Spinner from '../../components/Loader/Loader';
 import * as api from '../../services/themovieDB-api';
 import convertToSlug from '../../utils/slugify';
 
@@ -12,6 +12,8 @@ export default function HomePage() {
    const location = useLocation();
    const [trendFilms, setTrendFilms] = useState(null);
    const [error, setError] = useState(null);
+   // const [page, setPage] = useState(1);
+   // const [totalMovie, setTotalMovie] = useState(0);
    const [status, setStatus] = useState('idle');
    const unmountedRef = useRef();
 
@@ -56,9 +58,7 @@ export default function HomePage() {
             Trending today <SiThemoviedatabase />
          </h2>
 
-         {status === 'pending' && (
-            <Loader type="ThreeDots" color="blue" height={80} width={80} />
-         )}
+         {status === 'pending' && <Spinner />}
 
          {status === 'rejected' && <h3>{error.message}</h3>}
 

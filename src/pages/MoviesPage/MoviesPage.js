@@ -4,8 +4,8 @@ import style from './MoviesPage.module.css';
 import convertToSlug from '../../utils/slugify';
 import * as api from '../../services/themovieDB-api';
 import { toast } from 'react-toastify';
-import Loader from 'react-loader-spinner';
 import { FcSearch } from 'react-icons/fc';
+import Spinner from '../../components/Loader/Loader';
 
 export default function MoviesPage() {
    const location = useLocation();
@@ -102,9 +102,7 @@ export default function MoviesPage() {
             </button>
          </form>
 
-         {status === 'pending' && (
-            <Loader type="ThreeDots" color="blue" height={80} width={80} />
-         )}
+         {status === 'pending' && <Spinner />}
          {status === 'rejected' && <h2>{error.message}</h2>}
 
          {status === 'resolved' && (

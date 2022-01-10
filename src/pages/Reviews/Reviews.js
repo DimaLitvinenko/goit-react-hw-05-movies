@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { toast } from 'react-toastify';
 import style from './Reviews.module.css';
 import * as api from '../../services/themovieDB-api';
-import Loader from 'react-loader-spinner';
+import Spinner from '../../components/Loader/Loader';
 
 export default function Reviews({ movieId }) {
    const [review, setReviews] = useState([]);
@@ -46,9 +46,7 @@ export default function Reviews({ movieId }) {
 
    return (
       <section>
-         {status === 'pending' && (
-            <Loader type="ThreeDots" color="blue" height={80} width={80} />
-         )}
+         {status === 'pending' && <Spinner />}
 
          {status === 'rejected' && <h2>{error.message}</h2>}
 
