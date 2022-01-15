@@ -124,7 +124,10 @@ export default function MovieDetailPage() {
                            className={style.infoLink}
                            state={{ from: location?.state?.from }}
                         >
-                           Cast <BsCast />
+                           Cast
+                           <i className={style.icon}>
+                              <BsCast />
+                           </i>
                         </Link>
                      </li>
                      <li className={style.infoItem}>
@@ -133,7 +136,10 @@ export default function MovieDetailPage() {
                            className={style.infoLink}
                            state={{ from: location?.state?.from }}
                         >
-                           Reviews <MdPreview />
+                           Reviews
+                           <i className={style.icon}>
+                              <MdPreview />
+                           </i>
                         </Link>
                      </li>
                   </ul>

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import style from './Cast.module.css';
 import { toast } from 'react-toastify';
 import * as api from '../../services/themovieDB-api';
-import profileImg from '../../images/profile.jpg';
+import profileImg from '../../images/no_profile_bg-red.png';
 import Spinner from '../../components/Loader/Loader';
 
 export default function Cast({ movieId }) {
@@ -59,13 +59,13 @@ export default function Cast({ movieId }) {
                         className={style.profileImg}
                         src={
                            profile_path
-                              ? `https://image.tmdb.org/t/p/w185/${profile_path}`
+                              ? `https://image.tmdb.org/t/p/w200/${profile_path}`
                               : profileImg
                         }
                         alt={name}
                      />
-                     <p>{name}</p>
-                     <p className={style.character}>character: {character}</p>
+                     <p className={style.name}>{name}</p>
+                     <p className={style.character}>{character}</p>
                   </li>
                ))}
             </ul>

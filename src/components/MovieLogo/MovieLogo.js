@@ -1,4 +1,4 @@
-import movieLogo from '../../images/logo_short.svg';
+import movieLogo from '../../images/logo_long.svg';
 import style from './MovieLogo.module.css';
 
 export default function MovieLogo() {

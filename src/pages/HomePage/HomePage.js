@@ -9,6 +9,7 @@ import * as api from '../../services/themovieDB-api';
 import convertToSlug from '../../utils/slugify';
 
 export default function HomePage() {
+   const base_img_url = 'https://image.tmdb.org/t/p/w342/';
    const location = useLocation();
    const [trendFilms, setTrendFilms] = useState(null);
    const [error, setError] = useState(null);
@@ -64,14 +65,19 @@ export default function HomePage() {
 
          {status === 'resolved' && (
             <ul className={style.list}>
-               {trendFilms.map(({ id, title }) => (
+               {trendFilms.map(({ id, title, poster_path }) => (
                   <li key={id} className={style.item}>
                      <Link
                         className={style.movieLink}
                         to={`/movies/${convertToSlug(`${title} ${id}`)}`}
                         state={{ from: { location, label: 'back to Home' } }}
                      >
-                        {title}
+                        <img
+                           className={style.movieImage}
+                           src={`${base_img_url}${poster_path}`}
+                           alt={title}
+                        />
+                        <h4 className={style.movieTitle}>{title}</h4>
                      </Link>
                   </li>
                ))}
@@ -80,3 +86,25 @@ export default function HomePage() {
       </section>
    );
 }
+
+// import { useEffect, useState } from "react";
+// import Gallery from "../components/Gallery/Gallery";
+// import * as apiService from '../services/apiService'
+
+// export default function HomePage() {
+//     const [trends, setTrends] = useState(null);
+
+//     useEffect(() => {
+//         apiService.getTrends().then(r => {
+//             const sortByPopularity = [...r.results].sort((a, b) => a.popularity < b.popularity ? 1 : -1);
+//             setTrends(sortByPopularity)
+//         })
+//     }, [])
+
+//     return (
+//         <>
+//             <h1 className="tittle"> TOP trends this week</h1>
+//             {trends && <Gallery items={trends}/>}
+//         </>
+//     )
+// }

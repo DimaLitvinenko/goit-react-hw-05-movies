@@ -4,25 +4,42 @@
 
 .button {
    margin-bottom: 20px;
-   padding: 5px 10px;
+   padding: 8px 12px;
    text-align: center;
    background: linear-gradient(to right, hsl(150 100% 50%), hsl(190 100% 60%));
    text-transform: capitalize;
    border-radius: 6px;
    opacity: 0.85;
    cursor: pointer;
+   transform-origin: center;
+   transform: translateZ(0) scale(1) rotateY(0);
    color: rgba(21, 20, 20, 0.85);
-   transition: color 300ms linear, background 300ms linear, opacity 300ms linear;
+   transition: color 300ms linear, background 300ms linear, opacity 300ms linear,
+      transform 300ms linear;
 }
+
 .button:hover,
 .button:focus {
    opacity: 1;
+   animation: 600ms identifier linear;
    color: rgb(21, 20, 20);
    background: linear-gradient(to left, hsl(150 100% 50%), hsl(190 100% 60%));
 }
 
+@keyframes identifier {
+   0% {
+      transform: rotate(0);
+   }
+   50% {
+      transform: translateZ(0) scale(1.001) rotateY(0.5turn);
+   }
+   100% {
+      transform: translateY(0.5turn) scale(1.001) rotateY(0.5turn);
+   }
+}
 .mainWrapper {
    display: flex;
+   padding-bottom: 20px;
    border-bottom: 1px solid blue;
 }
 
@@ -50,6 +67,7 @@
 .infoWrapper {
    border-bottom: 1px solid blue;
    margin-bottom: 20px;
+   padding-bottom: 10px;
 }
 
 .infoTitle {
@@ -71,13 +89,13 @@
    list-style: none;
 }
 
-.infoItem:not(last-child) {
+/* .infoItem:not(:last-child) {
    margin-right: 15px;
-}
+} */
 
 .infoLink {
    display: flex;
-   flex-direction: row;
+   flex-direction: column-reverse;
    align-items: center;
    padding: 6px 10px;
 
@@ -93,4 +111,12 @@
 .infoLink:focus {
    color: #90cea1;
    text-decoration: underline;
+}
+
+.icon {
+   display: flex;
+   align-self: center;
+   margin-left: 5px;
+   width: 20px;
+   height: auto;
 }

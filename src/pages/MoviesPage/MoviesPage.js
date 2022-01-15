@@ -1,13 +1,14 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link, useLocation, useSearchParams } from 'react-router-dom';
 import style from './MoviesPage.module.css';
+import Spinner from '../../components/Loader/Loader';
 import convertToSlug from '../../utils/slugify';
 import * as api from '../../services/themovieDB-api';
 import { toast } from 'react-toastify';
 import { FcSearch } from 'react-icons/fc';
-import Spinner from '../../components/Loader/Loader';
 
 export default function MoviesPage() {
+   const base_img_url = 'https://image.tmdb.org/t/p/w342/';
    const location = useLocation();
    const [searchParams, setSearchParams] = useSearchParams();
    const searchQuery = searchParams.get('query');
@@ -86,15 +87,18 @@ export default function MoviesPage() {
          <form onSubmit={handleFormSubmit} className={style.form}>
             <input
                className={style.input}
-               id="input"
+               id="searchInput"
+               name="searchInput"
                type="text"
                autoComplete="off"
                autoFocus
                placeholder=" "
                value={query}
                onChange={handleInputChange}
+               pattern="^[0-9a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+               title="Поисковое слово может состоять только из букв, апострофа, тире, цифр и пробелов"
             />
-            <label className={style.placeholder} htmlFor="input">
+            <label className={style.placeholder} htmlFor="searchInput">
                Search The Movies
             </label>
             <button type="submit" className={style.button}>
@@ -107,7 +111,7 @@ export default function MoviesPage() {
 
          {status === 'resolved' && (
             <ul className={style.list}>
-               {movies.map(({ id, title }) => (
+               {movies.map(({ id, title, poster_path, release_date }) => (
                   <li key={id} className={style.item}>
                      <Link
                         className={style.movieLink}
@@ -116,8 +120,17 @@ export default function MoviesPage() {
                            from: { location, label: 'back to Movies' },
                         }}
                      >
-                        {title}
+                        <img
+                           className={style.movieImage}
+                           src={`${base_img_url}${poster_path}`}
+                           alt={title}
+                        />
                      </Link>
+                     <h4 className={style.movieTitle}>{title}</h4>
+                     <p className={style.movieRelisedTitle}>
+                        Relised:
+                        <span className={style.movieRelised}> {release_date}</span>
+                     </p>
                   </li>
                ))}
             </ul>
